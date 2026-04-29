@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVision - ITEC 101 Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+	
+        /* Figma Gallery Showcase */
+        .figma-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 850px;
+            margin-top: 10px;
+            perspective: 1000px;
+        }
+
+        .figma-img-wrapper {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(201, 168, 76, 0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--card-bg);
+        }
+
+        .figma-img-wrapper:hover {
+            transform: translateY(-10px) rotateX(5deg) scale(1.05);
+            border-color: var(--text-gold);
+            box-shadow: 0 20px 50px rgba(201, 168, 76, 0.3);
+            z-index: 10;
+        }
+
+        .figma-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 16 / 9;
+            transition: transform 0.5s ease;
+        }
+
+        .figma-img-wrapper:hover img {
+            transform: scale(1.1);
+        }
+
+        .figma-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: var(--text-gold);
+            padding: 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .figma-img-wrapper:hover .figma-caption {
+            transform: translateY(0);
+        }
+
+        :root {
+            /* Original Theme Colors */
+            --gryffindor-red: #740001;
+            --gryffindor-gold: #D3A625;
+            --slytherin-green: #1A472A;
+            --slytherin-silver: #AAAAAA;
+            --ravenclaw-blue: #0E1A40;
+            --ravenclaw-bronze: #946B2D;
+            --hufflepuff-yellow: #ECB939;
+            --hufflepuff-black: #372E29;
+            --parchment: #F5E6D3;
+            --dark-bg: #0a0a0f;
+            --card-bg: #111118;
+            --text-gold: #C9A84C;
+            --text-silver: #B8B8C8;
+
+            /* Mood Board Colors (For display on Inspiration Slide) */
+            --mb-main-text: #ebebeb;
+            --mb-main-bg: #1f1e1a;
+            --mb-btn-color: #f9a131;
+            --mb-card-red: #64120d;
+            --mb-card-green: #31751f;
+            --mb-card-blue: #003d63;
+            --mb-card-brown: #726255;
+        }
+
+        body {
+            font-family: 'Merriweather', serif;
+            background: var(--dark-bg);
+            color: var(--parchment);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Magical particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--text-gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 8s infinite;
+            box-shadow: 0 0 6px var(--text-gold), 0 0 12px var(--text-gold);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Background Logo Watermark */
+        .background-logo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vh;
+            height: 80vh;
+            background: url('logo.jpg') no-repeat center;
+            background-size: contain;
+            opacity: 0.07; /* Slightly increased to compensate for filters */
+            z-index: 1;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            filter: invert(1) hue-rotate(180deg) brightness(1.5);
+        }
+
+        /* Slide container */
+        .slide-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 40px 60px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Decorative borders */
+        .slide::before,
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 2px solid var(--text-gold);
+            opacity: 0.3;
+        }
+
+        .slide::before {
+            top: 30px;
+            left: 30px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .slide::after {
+            bottom: 30px;
+            right: 30px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Corner ornaments */
+        .corner-ornament {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0.4;
+        }
+
+        .corner-ornament.tl { top: 20px; left: 20px; }
+        .corner-ornament.tr { top: 20px; right: 20px; transform: rotate(90deg); }
+        .corner-ornament.bl { bottom: 20px; left: 20px; transform: rotate(-90deg); }
+        .corner-ornament.br { bottom: 20px; right: 20px; transform: rotate(180deg); }
+
+        .corner-ornament svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--text-gold);
+            stroke-width: 1.5;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 4rem;
+            color: var(--text-gold);
+            text-shadow: 0 0 20px rgba(201, 168, 76, 0.3), 0 0 40px rgba(201, 168, 76, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: var(--text-gold);
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 2px;
+            border-bottom: 2px solid rgba(201, 168, 76, 0.3);
+            padding-bottom: 10px;
+            width: 60%;
+        }
+
+        h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--text-silver);
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--parchment);
+            opacity: 0.9;
+        }
+
+        /* Title slide special styling */
+        .title-slide h1 {
+            font-size: 5.5rem;
+            margin-bottom: 10px;
+        }
+
+        .title-slide .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--text-silver);
+            letter-spacing: 6px;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .course-info {
+            font-size: 1.1rem;
+            color: var(--text-silver);
+            opacity: 0.7;
+            margin-top: 60px;
+        }
+
+        .separator {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--text-gold), transparent);
+            margin: 20px auto;
+        }
+
+        /* Content cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .content-card {
+            background: linear-gradient(135deg, rgba(17, 17, 24, 0.9), rgba(30, 30, 45, 0.8));
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(201, 168, 76, 0.1);
+            border-color: rgba(201, 168, 76, 0.4);
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gryffindor-red), var(--slytherin-green), var(--ravenclaw-blue), var(--hufflepuff-yellow));
+        }
+
+        .content-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .member-card {
+            text-align: center;
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: white;
+            border: 3px solid var(--text-gold);
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+        }
+
+        .member-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--text-gold);
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            font-size: 0.9rem;
+            color: var(--text-silver);
+            opacity: 0.8;
+        }
+
+        /* Lists */
+        .magic-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .magic-list li {
+            padding: 10px 0 10px 30px;
+            position: relative;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .magic-list li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--text-gold);
+            font-size: 0.9rem;
+        }
+
+        .magic-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gryffindor-red), var(--slytherin-green), var(--ravenclaw-blue), var(--hufflepuff-yellow));
+            opacity: 0.5;
+        }
+
+        .timeline-item {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: transparent;
+            padding: 0 20px;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--text-gold);
+            margin: 0 auto 15px;
+            box-shadow: 0 0 15px var(--text-gold);
+        }
+
+        .timeline-label {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--text-silver);
+        }
+
+        /* Moodboard Color Palette */
+        .moodboard-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .moodboard-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .palette-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .palette-label {
+            font-family: 'Merriweather', serif;
+            font-size: 0.85rem;
+            color: var(--text-silver);
+            text-align: center;
+            text-transform: lowercase;
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gryffindor-red), var(--text-gold));
+            transition: width 0.3s;
+            z-index: 100;
+        }
+
+        /* Figma placeholder */
+        .figma-placeholder {
+            width: 100%;
+            max-width: 900px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(17, 17, 24, 0.9), rgba(30, 30, 45, 0.8));
+            border: 2px dashed rgba(201, 168, 76, 0.3);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: var(--text-silver);
+        }
+
+        .figma-placeholder svg {
+            width: 60px;
+            height: 60px;
+            opacity: 0.5;
+        }
+
+        /* Task cards */
+        .task-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .task-card {
+            background: linear-gradient(135deg, rgba(17, 17, 24, 0.9), rgba(30, 30, 45, 0.8));
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+        }
+
+        .task-card .task-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .task-initial {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: white;
+            border: 2px solid var(--text-gold);
+        }
+
+        .task-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--text-gold);
+        }
+
+        .task-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-card li {
+            padding: 6px 0;
+            font-size: 0.95rem;
+            color: var(--parchment);
+            opacity: 0.85;
+        }
+
+        /* React logo animation */
+        .react-logo {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .react-logo .core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #61DAFB;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #61DAFB;
+        }
+
+        .react-logo .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 36px;
+            border: 2px solid #61DAFB;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.6;
+        }
+
+        .react-logo .orbit:nth-child(2) { transform: translate(-50%, -50%) rotate(60deg); }
+        .react-logo .orbit:nth-child(3) { transform: translate(-50%, -50%) rotate(-60deg); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .slide { padding: 40px 30px; }
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            .content-grid { grid-template-columns: 1fr; }
+            .task-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="background-logo"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h1>IVision</h1>
+            <div class="separator"></div>
+            <p class="subtitle">ITEC 101 — COURSE PROJECT</p>
+            <p class="course-info">Phase 1 & 2 Presentation</p>
+            <p class="course-info" style="margin-top: 10px; font-size: 0.9rem;">Elijah • Jhay • Albert • Louie</p>
+        </div>
+
+        <!-- Slide 2: Team Introduction (UPDATED ROLES) -->
+        <div class="slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h2>The Fellowship</h2>
+            <div class="separator"></div>
+            <div class="content-grid">
+                <div class="content-card member-card">
+                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--gryffindor-red), var(--gryffindor-gold));">E</div>
+                    <div class="member-name">Elijah</div>
+                    <div class="member-role">Team Leader</div>
+                </div>
+                <div class="content-card member-card">
+                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--slytherin-green), var(--slytherin-silver));">J</div>
+                    <div class="member-name">Jhay</div>
+                    <div class="member-role">Designer</div>
+                </div>
+                <div class="content-card member-card">
+                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--ravenclaw-blue), var(--ravenclaw-bronze));">A</div>
+                    <div class="member-name">Albert</div>
+                    <div class="member-role">UI/UX Programmer</div>
+                </div>
+                <div class="content-card member-card">
+                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--hufflepuff-yellow), var(--hufflepuff-black));">L</div>
+                    <div class="member-name">Louie</div>
+                    <div class="member-role">Content Creator</div>
+                </div>
+            </div>
+        </div>
+
+       <!-- Slide 3: Figma Prototype -->
+        <div class="slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h2>Figma Prototype</h2>
+            <div class="separator"></div>
+            
+            <!-- New Image Gallery -->
+            <div class="figma-gallery">
+                <div class="figma-img-wrapper">
+                    <img src="1.jfif" alt="IVision Landing Page">
+                    <div class="figma-caption">IVision Landing Page</div>
+                </div>
+                <div class="figma-img-wrapper">
+                    <img src="4.png" alt="Figma Workspace Overview">
+                    <div class="figma-caption">Figma Workspace Overview</div>
+                </div>
+                <div class="figma-img-wrapper">
+                    <img src="2.png" alt="About Us Accordion Layout">
+                    <div class="figma-caption">About Us Accordion Layout</div>
+                </div>
+                <div class="figma-img-wrapper">
+                    <img src="3.png" alt="Team Project App Recreations">
+                    <div class="figma-caption">Team Project App Recreations</div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 4: React Framework (Part 1 - Split) -->
+        <div class="slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h2>Front-End Framework</h2>
+            <div class="separator"></div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="react-logo">
+                        <div class="orbit"></div>
+                        <div class="orbit"></div>
+                        <div class="orbit"></div>
+                        <div class="core"></div>
+                    </div>
+                    <h3 style="text-align: center; margin-top: 10px;">React</h3>
+                </div>
+                <div class="content-card">
+                    <h3>What is React?</h3>
+                    <ul class="magic-list">
+                        <li>A JavaScript library for building user interfaces</li>
+                        <li>Developed and maintained by Meta (Facebook)</li>
+                        <li>Uses a component-based architecture</li>
+                        <li>Virtual DOM for efficient rendering</li>
+                        <li>One of the most popular front-end frameworks</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: React Framework (Part 2 - Split) -->
+        <div class="slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h2>Front-End Framework</h2>
+            <div class="separator"></div>
+            <div class="content-grid" style="grid-template-columns: 1fr;">
+                <div class="content-card">
+                    <h3>Why We Chose React</h3>
+                    <ul class="magic-list">
+                        <li><strong>Component Reusability</strong> — Build once, use everywhere across the application</li>
+                        <li><strong>Large Ecosystem</strong> — Extensive libraries and community support (UIverse, Material UI)</li>
+                        <li><strong>Performance</strong> — Virtual DOM ensures smooth, fast user experiences</li>
+                        <li><strong>Industry Standard</strong> — Widely used in professional development; great skill to learn</li>
+                        <li><strong>Easy Integration</strong> — Works seamlessly with UI libraries like Uiverse and Material UI</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: UI Libraries -->
+        <div class="slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h2>UI Libraries</h2>
+            <div class="separator"></div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>UIverse</h3>
+                    <p style="margin-bottom: 15px;">Open-source UI elements library with beautiful, ready-to-use components.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Material UI / React Icons</h3>
+                    <p style="margin-bottom: 15px;">Google's Material Design components and a comprehensive icon library.</p>
+                </div>
+                <div class="content-card full-width">
+                    <h3>Why These Libraries?</h3>
+                    <p>These libraries are <strong>"goods sa React"</strong> — they integrate seamlessly and speed up development.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Task Distribution (UPDATED TASKS) -->
+        <div class="slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h2>Task Distribution</h2>
+            <div class="separator"></div>
+            <div class="task-container">
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-initial" style="background: linear-gradient(135deg, var(--gryffindor-red), var(--gryffindor-gold));">E</div>
+                        <div class="task-name">Elijah</div>
+                    </div>
+                    <ul>
+                        <li>Communication management</li>
+                        <li>Project planning and task coordination</li>
+                        <li>AI Prompter</li>
+                        <li>Documentation of AI prompts</li>
+                    </ul>
+                </div>
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-initial" style="background: linear-gradient(135deg, var(--slytherin-green), var(--slytherin-silver));">J</div>
+                        <div class="task-name">Jhay</div>
+                    </div>
+                    <ul>
+                        <li>High Fidelity Prototype</li>
+                        <li>Graphic Designs (logo, other elements and images)</li>
+                    </ul>
+                </div>
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-initial" style="background: linear-gradient(135deg, var(--ravenclaw-blue), var(--ravenclaw-bronze));">A</div>
+                        <div class="task-name">Albert</div>
+                    </div>
+                    <ul>
+                        <li>Development of website</li>
+                        <li>UI management and web design</li>
+                    </ul>
+                </div>
+                <div class="task-card">
+                    <div class="task-header">
+                        <div class="task-initial" style="background: linear-gradient(135deg, var(--hufflepuff-yellow), var(--hufflepuff-black));">L</div>
+                        <div class="task-name">Louie</div>
+                    </div>
+                    <ul>
+                        <li>Content management</li>
+                        <li>Content writing and editing</li>
+                        <li>Presentation flow</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Project Timeline -->
+        <div class="slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h2>Project Timeline</h2>
+            <div class="separator"></div>
+            <div class="timeline">
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Planning</div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Design</div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Development</div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Testing</div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Deployment</div></div>
+            </div>
+        </div>
+
+       <!-- Slide 9: Inspirations -->
+        <div class="slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h2>Inspirations & Aesthetics</h2>
+            <div class="separator"></div>
+            
+            <!-- Removed the inline 1fr style to allow the default 2-column grid -->
+            <div class="content-grid">
+                
+                <div class="content-card">
+                    <h3>Magical Origins</h3>
+                    <p>The globally beloved <strong>Harry Potter</strong> universe serves as our primary inspiration. We blended the mystical, deep aesthetics of the wizarding world—specifically the four iconic Hogwarts houses—with modern web design principles.</p>
+                </div>
+
+                <!-- NEW CARD: UI Interaction Inspiration -->
+                <div class="content-card">
+                    <h3>Interactive UI Layouts</h3>
+                    <p>For the user interface, we are heavily inspired by modern <strong>expanding vertical accordions</strong> and dynamic content cards. This sleek interaction allows users to explore different characters or sections smoothly while maintaining a clean, uncluttered aesthetic.</p>
+                </div>
+
+                <!-- Made the Moodboard full-width to sit neatly below the two text cards -->
+                <div class="content-card full-width">
+                    <h3 style="text-align: center;">Mood Board Palette</h3>
+                    <div class="moodboard-container">
+                        <div class="moodboard-item">
+                            <div class="palette-circle" style="background-color: var(--mb-main-text);"></div>
+                            <div class="palette-label">main text<br>#ebebeb</div>
+                        </div>
+                        <div class="moodboard-item">
+                            <div class="palette-circle" style="background-color: var(--mb-main-bg);"></div>
+                            <div class="palette-label">main bg<br>#1f1e1a</div>
+                        </div>
+                        <div class="moodboard-item">
+                            <div class="palette-circle" style="background-color: var(--mb-btn-color);"></div>
+                            <div class="palette-label">buttons<br>#f9a131</div>
+                        </div>
+                        <div class="moodboard-item">
+                            <div class="palette-circle" style="background-color: var(--mb-card-red);"></div>
+                            <div class="palette-label">cards<br>#64120d</div>
+                        </div>
+                        <div class="moodboard-item">
+                            <div class="palette-circle" style="background-color: var(--mb-card-green);"></div>
+                            <div class="palette-label">cards<br>#31751f</div>
+                        </div>
+                        <div class="moodboard-item">
+                            <div class="palette-circle" style="background-color: var(--mb-card-blue);"></div>
+                            <div class="palette-label">cards<br>#003d63</div>
+                        </div>
+                        <div class="moodboard-item">
+                            <div class="palette-circle" style="background-color: var(--mb-card-brown);"></div>
+                            <div class="palette-label">cards<br>#726255</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 10: Thank You -->
+        <div class="slide title-slide">
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <h1 style="font-size: 4rem;">Mischief Managed</h1>
+            <div class="separator"></div>
+            <p class="subtitle">Thank You for Listening</p>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            document.getElementById('progressBar').style.width = ((index + 1) / totalSlides * 100) + '%';
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (5 + Math.random() * 5) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+        document.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
+        });
+    </script>
+</body>
+</html>
