@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IVision - ITEC 101 Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@700&family=Merriweather:wght@300;400;700&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-	
+
         /* Figma Gallery Showcase */
         .figma-gallery {
             display: grid;
@@ -29,7 +33,7 @@
             border-radius: 12px;
             overflow: hidden;
             border: 2px solid rgba(201, 168, 76, 0.2);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: var(--card-bg);
         }
@@ -59,7 +63,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
             color: var(--text-gold);
             padding: 15px;
             font-family: 'Cinzel', serif;
@@ -131,10 +135,23 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
         }
 
         /* Background Logo Watermark */
@@ -147,7 +164,8 @@
             height: 80vh;
             background: url('logo.jpg') no-repeat center;
             background-size: contain;
-            opacity: 0.07; /* Slightly increased to compensate for filters */
+            opacity: 0.07;
+            /* Slightly increased to compensate for filters */
             z-index: 1;
             pointer-events: none;
             mix-blend-mode: screen;
@@ -181,8 +199,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Decorative borders */
@@ -218,10 +243,28 @@
             opacity: 0.4;
         }
 
-        .corner-ornament.tl { top: 20px; left: 20px; }
-        .corner-ornament.tr { top: 20px; right: 20px; transform: rotate(90deg); }
-        .corner-ornament.bl { bottom: 20px; left: 20px; transform: rotate(-90deg); }
-        .corner-ornament.br { bottom: 20px; right: 20px; transform: rotate(180deg); }
+        .corner-ornament.tl {
+            top: 20px;
+            left: 20px;
+        }
+
+        .corner-ornament.tr {
+            top: 20px;
+            right: 20px;
+            transform: rotate(90deg);
+        }
+
+        .corner-ornament.bl {
+            bottom: 20px;
+            left: 20px;
+            transform: rotate(-90deg);
+        }
+
+        .corner-ornament.br {
+            bottom: 20px;
+            right: 20px;
+            transform: rotate(180deg);
+        }
 
         .corner-ornament svg {
             width: 100%;
@@ -261,7 +304,8 @@
             margin-bottom: 15px;
         }
 
-        p, li {
+        p,
+        li {
             font-size: 1.15rem;
             line-height: 1.8;
             color: var(--parchment);
@@ -456,8 +500,8 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .palette-label {
@@ -589,19 +633,93 @@
             opacity: 0.6;
         }
 
-        .react-logo .orbit:nth-child(2) { transform: translate(-50%, -50%) rotate(60deg); }
-        .react-logo .orbit:nth-child(3) { transform: translate(-50%, -50%) rotate(-60deg); }
+        .react-logo .orbit:nth-child(2) {
+            transform: translate(-50%, -50%) rotate(60deg);
+        }
+
+        .react-logo .orbit:nth-child(3) {
+            transform: translate(-50%, -50%) rotate(-60deg);
+        }
+
+        /* Phase cards */
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+
+        .phase-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .phase-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.9rem;
+            color: var(--text-gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        .phase-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            min-height: 3.6rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .phase-card ul li {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding: 8px 0 8px 25px;
+        }
 
         /* Responsive */
+        @media (max-width: 1000px) {
+            .phase-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                max-height: 60vh;
+                overflow-y: auto;
+                padding-right: 10px;
+            }
+            
+            .phase-card h3 {
+                min-height: auto;
+            }
+        }
+
         @media (max-width: 900px) {
-            .slide { padding: 40px 30px; }
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 1.8rem; }
-            .content-grid { grid-template-columns: 1fr; }
-            .task-container { grid-template-columns: 1fr; }
+            .slide {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .task-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="particles" id="particles"></div>
     <div class="background-logo"></div>
@@ -610,10 +728,22 @@
     <div class="slide-container">
         <!-- Slide 1: Title -->
         <div class="slide active title-slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h1>IVision</h1>
             <div class="separator"></div>
             <p class="subtitle">ITEC 101 — COURSE PROJECT</p>
@@ -623,45 +753,77 @@
 
         <!-- Slide 2: Team Introduction (UPDATED ROLES) -->
         <div class="slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h2>The Fellowship</h2>
             <div class="separator"></div>
             <div class="content-grid">
                 <div class="content-card member-card">
-                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--gryffindor-red), var(--gryffindor-gold));">E</div>
+                    <div class="member-avatar"
+                        style="background: linear-gradient(135deg, var(--gryffindor-red), var(--gryffindor-gold));">E
+                    </div>
                     <div class="member-name">Elijah</div>
                     <div class="member-role">Team Leader</div>
                 </div>
                 <div class="content-card member-card">
-                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--slytherin-green), var(--slytherin-silver));">J</div>
+                    <div class="member-avatar"
+                        style="background: linear-gradient(135deg, var(--slytherin-green), var(--slytherin-silver));">J
+                    </div>
                     <div class="member-name">Jhay</div>
                     <div class="member-role">Designer</div>
                 </div>
                 <div class="content-card member-card">
-                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--ravenclaw-blue), var(--ravenclaw-bronze));">A</div>
+                    <div class="member-avatar"
+                        style="background: linear-gradient(135deg, var(--ravenclaw-blue), var(--ravenclaw-bronze));">A
+                    </div>
                     <div class="member-name">Albert</div>
                     <div class="member-role">UI/UX Programmer</div>
                 </div>
                 <div class="content-card member-card">
-                    <div class="member-avatar" style="background: linear-gradient(135deg, var(--hufflepuff-yellow), var(--hufflepuff-black));">L</div>
+                    <div class="member-avatar"
+                        style="background: linear-gradient(135deg, var(--hufflepuff-yellow), var(--hufflepuff-black));">
+                        L</div>
                     <div class="member-name">Louie</div>
                     <div class="member-role">Content Creator</div>
                 </div>
             </div>
         </div>
 
-       <!-- Slide 3: Figma Prototype -->
+        <!-- Slide 3: Figma Prototype -->
         <div class="slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h2>Figma Prototype</h2>
             <div class="separator"></div>
-            
+
             <!-- New Image Gallery -->
             <div class="figma-gallery">
                 <div class="figma-img-wrapper">
@@ -669,12 +831,12 @@
                     <div class="figma-caption">IVision Landing Page</div>
                 </div>
                 <div class="figma-img-wrapper">
-                    <img src="4.png" alt="Figma Workspace Overview">
-                    <div class="figma-caption">Figma Workspace Overview</div>
+                    <img src="4.png" alt="About Us Layout">
+                    <div class="figma-caption">About Us Layout</div>
                 </div>
                 <div class="figma-img-wrapper">
-                    <img src="2.png" alt="About Us Accordion Layout">
-                    <div class="figma-caption">About Us Accordion Layout</div>
+                    <img src="2.png" alt="Figma Workspace Overview">
+                    <div class="figma-caption">Figma Workspace Overview</div>
                 </div>
                 <div class="figma-img-wrapper">
                     <img src="3.png" alt="Team Project App Recreations">
@@ -684,10 +846,22 @@
         </div>
         <!-- Slide 4: React Framework (Part 1 - Split) -->
         <div class="slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h2>Front-End Framework</h2>
             <div class="separator"></div>
             <div class="content-grid">
@@ -715,21 +889,37 @@
 
         <!-- Slide 5: React Framework (Part 2 - Split) -->
         <div class="slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h2>Front-End Framework</h2>
             <div class="separator"></div>
             <div class="content-grid" style="grid-template-columns: 1fr;">
                 <div class="content-card">
                     <h3>Why We Chose React</h3>
                     <ul class="magic-list">
-                        <li><strong>Component Reusability</strong> — Build once, use everywhere across the application</li>
-                        <li><strong>Large Ecosystem</strong> — Extensive libraries and community support (UIverse, Material UI)</li>
+                        <li><strong>Component Reusability</strong> — Build once, use everywhere across the application
+                        </li>
+                        <li><strong>Large Ecosystem</strong> — Extensive libraries and community support (UIverse,
+                            Material UI)</li>
                         <li><strong>Performance</strong> — Virtual DOM ensures smooth, fast user experiences</li>
-                        <li><strong>Industry Standard</strong> — Widely used in professional development; great skill to learn</li>
-                        <li><strong>Easy Integration</strong> — Works seamlessly with UI libraries like Uiverse and Material UI</li>
+                        <li><strong>Industry Standard</strong> — Widely used in professional development; great skill to
+                            learn</li>
+                        <li><strong>Easy Integration</strong> — Works seamlessly with UI libraries like Uiverse and
+                            Material UI</li>
                     </ul>
                 </div>
             </div>
@@ -737,40 +927,69 @@
 
         <!-- Slide 6: UI Libraries -->
         <div class="slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h2>UI Libraries</h2>
             <div class="separator"></div>
             <div class="content-grid">
                 <div class="content-card">
                     <h3>UIverse</h3>
-                    <p style="margin-bottom: 15px;">Open-source UI elements library with beautiful, ready-to-use components.</p>
+                    <p style="margin-bottom: 15px;">Open-source UI elements library with beautiful, ready-to-use
+                        components.</p>
                 </div>
                 <div class="content-card">
                     <h3>Material UI / React Icons</h3>
-                    <p style="margin-bottom: 15px;">Google's Material Design components and a comprehensive icon library.</p>
+                    <p style="margin-bottom: 15px;">Google's Material Design components and a comprehensive icon
+                        library.</p>
                 </div>
                 <div class="content-card full-width">
                     <h3>Why These Libraries?</h3>
-                    <p>These libraries are <strong>"goods sa React"</strong> — they integrate seamlessly and speed up development.</p>
+                    <p>These libraries are <strong>"goods sa React"</strong> — they integrate seamlessly and speed up
+                        development.</p>
                 </div>
             </div>
         </div>
 
         <!-- Slide 7: Task Distribution (UPDATED TASKS) -->
         <div class="slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h2>Task Distribution</h2>
             <div class="separator"></div>
             <div class="task-container">
                 <div class="task-card">
                     <div class="task-header">
-                        <div class="task-initial" style="background: linear-gradient(135deg, var(--gryffindor-red), var(--gryffindor-gold));">E</div>
+                        <div class="task-initial"
+                            style="background: linear-gradient(135deg, var(--gryffindor-red), var(--gryffindor-gold));">
+                            E</div>
                         <div class="task-name">Elijah</div>
                     </div>
                     <ul>
@@ -782,7 +1001,9 @@
                 </div>
                 <div class="task-card">
                     <div class="task-header">
-                        <div class="task-initial" style="background: linear-gradient(135deg, var(--slytherin-green), var(--slytherin-silver));">J</div>
+                        <div class="task-initial"
+                            style="background: linear-gradient(135deg, var(--slytherin-green), var(--slytherin-silver));">
+                            J</div>
                         <div class="task-name">Jhay</div>
                     </div>
                     <ul>
@@ -792,7 +1013,9 @@
                 </div>
                 <div class="task-card">
                     <div class="task-header">
-                        <div class="task-initial" style="background: linear-gradient(135deg, var(--ravenclaw-blue), var(--ravenclaw-bronze));">A</div>
+                        <div class="task-initial"
+                            style="background: linear-gradient(135deg, var(--ravenclaw-blue), var(--ravenclaw-bronze));">
+                            A</div>
                         <div class="task-name">Albert</div>
                     </div>
                     <ul>
@@ -802,7 +1025,9 @@
                 </div>
                 <div class="task-card">
                     <div class="task-header">
-                        <div class="task-initial" style="background: linear-gradient(135deg, var(--hufflepuff-yellow), var(--hufflepuff-black));">L</div>
+                        <div class="task-initial"
+                            style="background: linear-gradient(135deg, var(--hufflepuff-yellow), var(--hufflepuff-black));">
+                            L</div>
                         <div class="task-name">Louie</div>
                     </div>
                     <ul>
@@ -814,44 +1039,95 @@
             </div>
         </div>
 
-        <!-- Slide 8: Project Timeline -->
+        <!-- Slide 8: Development Roadmap -->
         <div class="slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <h2>Project Timeline</h2>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <h2>Development Roadmap</h2>
             <div class="separator"></div>
-            <div class="timeline">
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Planning</div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Design</div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Development</div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Testing</div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Deployment</div></div>
+            <div class="phase-grid">
+                <div class="content-card phase-card">
+                    <div class="phase-number">Phase 1</div>
+                    <h3>Planning & Prototyping</h3>
+                    <ul class="magic-list">
+                        <li>Finalizing the high-fidelity Figma prototype (Home, About, Skills, Projects)</li>
+                        <li>Selecting our front-end framework (React/Vue) and UI component library</li>
+                        <li>Delivering the Phase 1 presentation and tech stack justification</li>
+                    </ul>
+                </div>
+                <div class="content-card phase-card">
+                    <div class="phase-number">Phase 2</div>
+                    <h3>Foundation & Coding</h3>
+                    <ul class="magic-list">
+                        <li>Initializing the React/Vue environment and GitHub repository</li>
+                        <li>Translating Figma designs into responsive components using our UI library</li>
+                        <li>Populating the website with actual portfolio content and media</li>
+                    </ul>
+                </div>
+                <div class="content-card phase-card">
+                    <div class="phase-number">Phase 3</div>
+                    <h3>Refinement & Launch</h3>
+                    <ul class="magic-list">
+                        <li>Reviewing and refining the coded UI against core HCI principles</li>
+                        <li>Deploying the live website to Vercel, Netlify, or GitHub Pages</li>
+                        <li>Compiling the AI Usage Disclosure Sheet and preparing for the Q&A defense</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-       <!-- Slide 9: Inspirations -->
+        <!-- Slide 9: Inspirations -->
         <div class="slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h2>Inspirations & Aesthetics</h2>
             <div class="separator"></div>
-            
+
             <!-- Removed the inline 1fr style to allow the default 2-column grid -->
             <div class="content-grid">
-                
+
                 <div class="content-card">
                     <h3>Magical Origins</h3>
-                    <p>The globally beloved <strong>Harry Potter</strong> universe serves as our primary inspiration. We blended the mystical, deep aesthetics of the wizarding world—specifically the four iconic Hogwarts houses—with modern web design principles.</p>
+                    <p>The globally beloved <strong>Harry Potter</strong> universe serves as our primary inspiration. We
+                        blended the mystical, deep aesthetics of the wizarding world—specifically the four iconic
+                        Hogwarts houses—with modern web design principles.</p>
                 </div>
 
                 <!-- NEW CARD: UI Interaction Inspiration -->
                 <div class="content-card">
                     <h3>Interactive UI Layouts</h3>
-                    <p>For the user interface, we are heavily inspired by modern <strong>expanding vertical accordions</strong> and dynamic content cards. This sleek interaction allows users to explore different characters or sections smoothly while maintaining a clean, uncluttered aesthetic.</p>
+                    <p>For the user interface, we are heavily inspired by modern <strong>expanding vertical
+                            accordions</strong> and dynamic content cards. This sleek interaction allows users to
+                        explore different characters or sections smoothly while maintaining a clean, uncluttered
+                        aesthetic.</p>
                 </div>
 
                 <!-- Made the Moodboard full-width to sit neatly below the two text cards -->
@@ -892,10 +1168,22 @@
         </div>
         <!-- Slide 10: Thank You -->
         <div class="slide title-slide">
-            <div class="corner-ornament tl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament tr"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament bl"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
-            <div class="corner-ornament br"><svg viewBox="0 0 40 40"><path d="M0 40 L0 0 L40 0"/><circle cx="8" cy="8" r="3"/></svg></div>
+            <div class="corner-ornament tl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament tr"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament bl"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
+            <div class="corner-ornament br"><svg viewBox="0 0 40 40">
+                    <path d="M0 40 L0 0 L40 0" />
+                    <circle cx="8" cy="8" r="3" />
+                </svg></div>
             <h1 style="font-size: 4rem;">Mischief Managed</h1>
             <div class="separator"></div>
             <p class="subtitle">Thank You for Listening</p>
@@ -951,4 +1239,5 @@
         });
     </script>
 </body>
+
 </html>
